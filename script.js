@@ -5,10 +5,11 @@ const focusTime = 25 * 60;
 const breakTime = 5 * 60;
 
 function updateDisplay() {
-    let minutes = Math.floor(totalSeconds / 60);
-    let seconds = totalSeconds % 60;
-    document.getElementById("display").textContent =
-        minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = totalSeconds % 60;
+  document.getElementById("display").textContent =
+    minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+  document.getElementById("status").textContent = isBreak ? "Break time!" : "Focus Time";
 }
 
 document.getElementById("start").addEventListener("click", function() {
