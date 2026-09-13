@@ -3,6 +3,7 @@ let timerInterval = null;
 let isBreak = false;
 let focusTime = 25 * 60;
 let breakTime = 5 * 60;
+let tasks = [];
 
 const quotes = [
   "One step at a time.",
@@ -31,9 +32,10 @@ function playBeep() {
 function updateDisplay() {
   let minutes = Math.floor(totalSeconds / 60);
   let seconds = totalSeconds % 60;
-  document.getElementById("display").textContent =
-    minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+  let timeString = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+  document.getElementById("display").textContent = timeString;
   document.getElementById("status").textContent = isBreak ? "Break time!" : "Focus Time";
+  document.title = timeString + " - " + (isBreak ? "Break" : "Focus");
 }
 
 document.getElementById("start").addEventListener("click", function() {
@@ -58,11 +60,9 @@ document.getElementById("start").addEventListener("click", function() {
         playBeep();
 
         if (isBreak) {
-          alert("Break`s over! Get ready for an other round!");
           isBreak = false;
           totalSeconds = focusTime;
         } else {
-          alert("Times up! Go rest a bit, you deserve it!");
           isBreak = true;
           totalSeconds = breakTime;
         }
@@ -105,3 +105,23 @@ document.getElementById("setTimes").addEventListener("click", function() {
   }
   updateDisplay();
 });
+
+document.getElementById("addTask").addEventListener("click", function() {
+  let taskText = document.getElementById("taskInput").value.trim();
+  if (taskText === "") return;
+
+  tasks.push({ text: taskText, done: false });
+  document.getElementById("taskInput").value = "";
+  renderTasks();
+});
+
+function renderTasks() {
+  let taskList = document.getElementById("taskList");
+  taskList.innerHTML = "";
+
+  tasks.forEach(function(task, index) {
+    let li = document.createElement("li");
+    li.textContent = task.text;
+    taskList.appendChild(li);
+  });
+}
