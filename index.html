@@ -5,12 +5,20 @@
 </head>
 
 <body>
+    <div id="app">
+
+    <p id="quote"></p>
     <p id="status">Focus Time</p>
     <h1 id="display">25:00</h1>
     <button id="start">Start</button>
     <button id="reset">Reset</button>
     <button id="pause">Pause</button>
 
+    <label>Focus (minutes): <input type="number" id="focusInput" value="25" min="1"</label>
+    <label>Break (minutes): <input type="number" id="breakInput" value="5" min="1"></label><br>
+    <button id="setTimes">Set</button>
+
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
