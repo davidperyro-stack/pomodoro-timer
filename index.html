@@ -5,31 +5,33 @@
 </head>
 
 <body>
-<div id="app">
-  <p id="quote"></p>
-  <p id="status">Focus Time</p>
-  <h1 id="display">25:00</h1>
+<div id="page">
+  <div id="app">
+    <p id="quote"></p>
+    <p id="status">Focus Time</p>
+    <h1 id="display">25:00</h1>
 
-  <div id="controls">
-    <button id="start">Start</button>
-    <button id="reset">Reset</button>
-    <button id="pause">Pause</button>
+    <div id="controls">
+      <button id="start">Start</button>
+      <button id="reset">Reset</button>
+      <button id="pause">Pause</button>
+    </div>
+
+    <div id="settings">
+      <label>Focus (minutes): <input type="number" id="focusInput" value="25" min="1"></label>
+      <label>Break (minutes): <input type="number" id="breakInput" value="5" min="1"></label>
+      <button id="setTimes">Set</button>
+    </div>
   </div>
 
-  <div id="settings">
-    <label>Focus (minutes): <input type="number" id="focusInput" value="25" min="1"></label>
-    <label>Break (minutes): <input type="number" id="breakInput" value="5" min="1"></label>
-    <button id="setTimes">Set</button>
+  <div id="tasks">
+    <p>Tasks</p>
+    <input type="text" id="taskInput" placeholder="What are you working on?">
+    <button id="addTask">Add</button>
+    <ul id="taskList"></ul>
   </div>
-  
-<div id="tasks">
-  <p>Tasks</p>
-  <input type="text" id="taskInput" placeholder="What are you working on?">
-  <button id="addTask">Add</button>
-  <ul id="taskList"></ul>
-</div>
-
 </div>
     <script src="script.js"></script>
+
 </body>
 </html>
