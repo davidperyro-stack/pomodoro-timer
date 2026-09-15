@@ -17,7 +17,7 @@ A simple pomodoro timer for study
 
 ## Live Website
 
-soon!
+https://davidperyro-stack.github.io/pomodoro-timer/
 
 ## AI Usage
 
