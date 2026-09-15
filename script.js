@@ -3,7 +3,23 @@ let timerInterval = null;
 let isBreak = false;
 let focusTime = 25 * 60;
 let breakTime = 5 * 60;
-let tasks = [];
+let savedTasks = localStorage.getItem("tasks");
+let tasks = savedTasks !== null ? JSON.parse(savedTasks) : [];
+let savedFocus = localStorage.getItem("focusMinutes");
+let savedBreak = localStorage.getItem("breakMinutes");
+
+if (savedFocus !== null) {
+  focusTime = savedFocus * 60;
+  totalSeconds = focusTime;
+  document.getElementById("focusInput").value = savedFocus;
+}
+
+if (savedBreak !== null) {
+  breakTime = savedBreak * 60;
+  document.getElementById("breakInput").value = savedBreak;
+}
+
+updateDisplay();
 
 const quotes = [
   "One step at a time.",
@@ -98,6 +114,9 @@ document.getElementById("setTimes").addEventListener("click", function() {
   focusTime = focusMinutes * 60;
   breakTime = breakMinutes * 60;
 
+  localStorage.setItem("focusMinutes", focusMinutes);
+  localStorage.setItem("breakMinutes", breakMinutes);
+
   if (!isBreak) {
     totalSeconds = focusTime;
   } else {
@@ -121,7 +140,48 @@ function renderTasks() {
 
   tasks.forEach(function(task, index) {
     let li = document.createElement("li");
-    li.textContent = task.text;
+
+    let taskSpan = document.createElement("span");
+    taskSpan.textContent = task.text;
+
+    if (task.done) {
+      taskSpan.style.textDecoration = "line-through";
+      taskSpan.style.color = "#666";
+    }
+    taskSpan.addEventListener("click", function() {
+      task.done = !task.done;
+      renderTasks();
+    });
+
+    li.appendChild(taskSpan);
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "x";
+    deleteBtn.addEventListener("click", function() {
+      tasks.splice(index, 1);
+      renderTasks();
+    });
+    li.appendChild(deleteBtn);
+
     taskList.appendChild(li);
   });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
+renderTasks();
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === " ") {
+    event.preventDefault();
+    if (timerInterval === null) {
+      document.getElementById("start").click();
+    } else {
+      document.getElementById("pause").click();
+    }
+  }
+
+  if (event.key === "r") {
+    document.getElementById("reset").click();
+  }
+});
